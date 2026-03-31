@@ -838,13 +838,12 @@ async function clearAll(){
 }
 
 // ---- INIT ----
-document.getElementById('password').addEventListener('keydown',function(e){if(e.key==='Enter')login();});
-document.getElementById('username').addEventListener('keydown',function(e){if(e.key==='Enter')login();});
-</script>
-</body>
-</html>
-document.getElementById('password').addEventListener('keydown',function(e){if(e.key==='Enter')login();});
-document.getElementById('username').addEventListener('keydown',function(e){if(e.key==='Enter')login();});
+document.getElementById('password').addEventListener('keydown',function(e){
+  if(e.key==='Enter') login();
+});
+document.getElementById('username').addEventListener('keydown',function(e){
+  if(e.key==='Enter') login();
+});
 </script>
 </body>
 </html>

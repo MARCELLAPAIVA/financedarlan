@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Finance Alt</title>
-<script type="text/javascript" src="https://gc.kes.v2.scr.kaspersky-labs.com/7EA5E9BB-55E1-4C31-9C21-4943DDFED2E4/main.js?attr=LWjSnO3mVimg--uVDbwdj2Zn26twxDCtaFbZh9AJRr3M_gdx8rLjwYpnCVF10QAhJjnMMk6ZQOv-cmHcXl8hIt8AoY2wZTE_XRg9TnAzgZXNp3qGuOj2QCOFCxCpcUMlkCRz4OKztO83u8KPgSxke8_DPJ7E5qGLshZrWvFmsiCBU0XJDIdFf_Lg2diThjbDfF-mzROeKH0jfBX7CpK2G6L5Es_jX-ElLmAsGYzoH5WpWtF5-pMN7ClCYA45Qv7-lBnveJwEa-P_EdOLpnsE_g" charset="UTF-8"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
@@ -16,7 +16,8 @@ body{background:var(--bg);color:var(--text);font-family:'Space Grotesk',sans-ser
 .auth-card{background:var(--bg2);border:1px solid var(--border);border-radius:16px;padding:2rem;width:100%;max-width:380px}
 .auth-logo{display:flex;flex-direction:column;align-items:center;gap:10px;font-size:1.5rem;font-weight:700;text-align:center;margin-bottom:1.5rem}.auth-logo span{color:var(--accent)}
 .logo-login{width:80px;height:80px;object-fit:contain;border-radius:12px}
-.logo-top{width:34px;height:34px;object-fit:contain;border-radius:8px;flex-shrink:0}
+.logo-top{width:34px;height:34px;object-fit:contain;border-radius:8px}
+.logo{display:flex;align-items:center;gap:10px;font-size:1.1rem;font-weight:700;letter-spacing:-0.5px}
 .auth-tabs{display:flex;background:var(--bg3);border-radius:8px;padding:4px;margin-bottom:1.5rem;gap:4px}
 .auth-tab{flex:1;padding:7px;border:none;border-radius:6px;background:transparent;color:var(--text2);font-family:inherit;font-size:13px;font-weight:500;cursor:pointer;transition:all .2s}
 .auth-tab.active{background:var(--bg2);color:var(--text)}
@@ -26,7 +27,7 @@ body{background:var(--bg);color:var(--text);font-family:'Space Grotesk',sans-ser
 .auth-msg.success{background:rgba(34,197,94,.15);color:var(--green);display:block}
 /* TOPBAR */
 .topbar{background:var(--bg2);border-bottom:1px solid var(--border);padding:8px 2rem;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;flex-wrap:wrap;gap:8px}
-.logo{display:flex;align-items:center;gap:10px;font-size:1.1rem;font-weight:700;letter-spacing:-0.5px}.logo span{color:var(--accent)}
+.logo span{color:var(--accent)}
 .nav-tabs{display:flex;gap:4px;flex-wrap:wrap}
 .nav-tab{padding:6px 13px;border-radius:8px;border:none;background:transparent;color:var(--text2);font-family:inherit;font-size:12.5px;font-weight:500;cursor:pointer;transition:all .2s}
 .nav-tab.active{background:var(--bg3);color:var(--text)}.nav-tab:hover:not(.active){background:var(--bg3);color:var(--text)}.nav-tab.danger{color:var(--red)}
@@ -91,24 +92,7 @@ input:focus,select:focus,textarea:focus{border-color:var(--accent)}select option
 .caixa-card{background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:1.25rem}
 .rank-medal{display:inline-flex;align-items:center;justify-content:center;width:22px;height:22px;border-radius:50%;font-size:11px;font-weight:700}
 .medal-1{background:rgba(245,158,11,.2);color:var(--amber)}.medal-2{background:rgba(167,139,250,.2);color:var(--purple)}.medal-3{background:rgba(34,197,94,.2);color:var(--green)}.medal-n{background:var(--bg3);color:var(--text3)}
-@media(max-width:768px){
-.chart-grid,.caixa-row{grid-template-columns:1fr}
-.main{padding:1rem}
-.kpi-value{font-size:1.2rem}
-.topbar{flex-direction:column;align-items:flex-start;padding:10px 1rem}
-.nav-tabs{width:100%;overflow-x:auto;flex-wrap:nowrap;padding-bottom:2px}
-.nav-tab{white-space:nowrap;flex:0 0 auto}
-.products-grid{grid-template-columns:1fr}
-.form-grid{grid-template-columns:1fr}
-.kpi-grid{grid-template-columns:1fr 1fr}
-.table-card{overflow-x:auto}
-table{min-width:700px}
-.auth-screen{padding:1rem}
-.auth-card{padding:1.25rem;max-width:100%}
-.logo-login{width:68px;height:68px}
-.logo-top{width:30px;height:30px}
-.user-info{width:100%;justify-content:flex-end}
-}
+@media(max-width:768px){.chart-grid,.caixa-row{grid-template-columns:1fr}.main{padding:1rem}.kpi-value{font-size:1.2rem}.topbar{flex-direction:column;align-items:flex-start}.nav-tabs{width:100%;overflow-x:auto}.nav-tab{flex:1;white-space:nowrap}.products-grid{grid-template-columns:1fr}.form-grid{grid-template-columns:1fr}.kpi-grid{grid-template-columns:1fr 1fr}}
 .empty-state{text-align:center;padding:2.5rem;color:var(--text3);font-size:13px}
 </style>
 </head>
@@ -118,14 +102,12 @@ table{min-width:700px}
 <div id="auth-screen" class="auth-screen">
   <div class="auth-card">
     <div class="auth-logo">
-      <img src="logo.png" alt="Finance Alt" class="logo-login">
+      <img src="logo.png" class="logo-login" alt="Logo">
       <div>Finance<span>Alt</span></div>
-    </div>
-    <div class="auth-tabs">
     </div>
     <div id="auth-msg" class="auth-msg"></div>
     <div class="auth-form">
-      <div class="form-group"><label>Login</label><input type="login" id="auth-login" placeholder="insira suas credenciais"></div>
+      <div class="form-group"><label>E-mail</label><input type="email" id="auth-email" placeholder="seuemail@exemplo.com"></div>
       <div class="form-group"><label>Senha</label><input type="password" id="auth-password" placeholder="insira sua senha" onkeydown="if(event.key==='Enter')authSubmit()"></div>
       <button class="btn btn-primary" id="auth-btn" onclick="authSubmit()" style="padding:10px;font-size:14px">Entrar</button>
     </div>
@@ -135,7 +117,7 @@ table{min-width:700px}
 <!-- ===== APP ===== -->
 <div id="app" style="display:none">
 <div class="topbar">
-  <div class="logo">Finance<span>Alt</span></div>
+  <div class="logo"><img src="logo.png" class="logo-top" alt="Logo"><span>Finance</span><span style="color:var(--accent)">Alt</span></div>
   <div class="nav-tabs">
     <button class="nav-tab active" onclick="showPage('dashboard')">Dashboard</button>
     <button class="nav-tab" onclick="showPage('produtos')">Produtos</button>
@@ -351,7 +333,6 @@ async function authSubmit(){
   var email = document.getElementById('auth-email').value.trim();
   var password = document.getElementById('auth-password').value;
   var msg = document.getElementById('auth-msg');
-
   msg.textContent = '';
   msg.className = 'auth-msg';
 
@@ -361,10 +342,7 @@ async function authSubmit(){
     return;
   }
 
-  var result = await sb.auth.signInWithPassword({
-    email: email,
-    password: password
-  });
+  var result = await sb.auth.signInWithPassword({ email: email, password: password });
 
   if(result.error){
     msg.textContent = result.error.message;
@@ -389,7 +367,7 @@ sb.auth.onAuthStateChange(async function(event, session){
     document.getElementById('user-info').textContent = session.user.email || '';
     await loadAllData();
     renderDashboard();
-  } else {
+  }else{
     document.getElementById('auth-screen').style.display = 'flex';
     document.getElementById('app').style.display = 'none';
   }
@@ -423,11 +401,9 @@ function getFilteredSales(period){
   var now = new Date();
   var year = now.getFullYear();
   var month = now.getMonth();
-
   return state.sales.filter(function(s){
     if(!s.data) return false;
     var d = new Date(s.data + 'T12:00:00');
-
     if(p === 'week'){
       var wk = new Date();
       wk.setHours(0,0,0,0);
@@ -451,7 +427,7 @@ function renderDashboard(){
   var margin=revenue>0?((profit/revenue)*100):0;
   var lm={week:'Semana',month:'Mês',year:'Ano'};var label=lm[state.currentPeriod];
   var yr=now.getFullYear();
-  var expYear=state.expenses.filter(function(e){return new Date(e.data+'T12:00:00').getFullYear()===yr;}).reduce(function(a,e){return a+e.valor;},0);
+  var expYear=state.expenses.filter(function(e){return new Date(e.data).getFullYear()===yr;}).reduce(function(a,e){return a+e.valor;},0);
   var saldo=state.caixa.reduce(function(a,c){return a+(c.tipo==='in'?c.valor:-c.valor);},0);
   document.getElementById('kpi-grid').innerHTML=
     '<div class="kpi blue"><div class="kpi-label">Faturamento ('+label+')</div><div class="kpi-value" style="color:var(--accent)">'+fmt(revenue)+'</div><div class="kpi-sub">'+totalQty+' unidades</div></div>'+
@@ -576,164 +552,92 @@ function selectClient(id){var c=state.clients.find(function(x){return x.id===id;
 document.addEventListener('click',function(e){if(!e.target.closest('.client-suggest'))document.getElementById('client-suggest-list').style.display='none';});
 
 async function registerSale(){
-  var free = document.getElementById('toggle-free').checked;
-  var qty = parseInt(document.getElementById('sale-qty').value) || 0;
-  var price = parseFloat(document.getElementById('sale-price').value) || 0;
-  var data = document.getElementById('sale-date').value;
-  var desc = document.getElementById('sale-desc').value.trim();
-  var btn = document.getElementById('btn-register-sale');
+  var free=document.getElementById('toggle-free').checked;
+  var qty=parseInt(document.getElementById('sale-qty').value)||0;
+  var price=parseFloat(document.getElementById('sale-price').value)||0;
+  var data=document.getElementById('sale-date').value;
+  var desc=document.getElementById('sale-desc').value.trim();
+  var btn=document.getElementById('btn-register-sale');
 
-  if(qty < 1){
-    alert('Quantidade inválida');
-    return;
-  }
-  if(price <= 0){
-    alert('Informe o valor');
-    return;
-  }
-  if(!data){
-    alert('Selecione a data');
-    return;
-  }
+  if(qty<1){alert('Quantidade inválida');return;}
+  if(price<=0){alert('Informe o valor');return;}
+  if(!data){alert('Selecione a data');return;}
 
-  btn.disabled = true;
-  btn.textContent = 'Salvando...';
+  btn.disabled=true;
+  btn.textContent='Salvando...';
 
-  try {
-    var saleData = {
-      qty: qty,
-      preco: price,
-      data: data,
-      descricao: desc,
-      user_id: state.currentUser.id
-    };
+  try{
+    var saleData={qty:qty,preco:price,data:data,descricao:desc,user_id:state.currentUser.id};
 
     if(free){
-      var freeName = document.getElementById('sale-free-name').value.trim();
-      if(!freeName){
-        alert('Informe o nome do item');
-        return;
-      }
-      saleData.produto_livre = freeName;
-      saleData.custo_unit = parseFloat(document.getElementById('sale-free-cost').value) || 0;
-    } else {
-      var productId = document.getElementById('sale-product').value;
-      if(!productId){
-        alert('Selecione um produto');
-        return;
-      }
-      var p = state.products.find(function(x){ return x.id === productId; });
-      saleData.produto_id = productId;
-      saleData.custo_unit = p ? p.custo : 0;
+      var freeName=document.getElementById('sale-free-name').value.trim();
+      if(!freeName){alert('Informe o nome do item');return;}
+      saleData.produto_livre=freeName;
+      saleData.custo_unit=parseFloat(document.getElementById('sale-free-cost').value)||0;
+    }else{
+      var productId=document.getElementById('sale-product').value;
+      if(!productId){alert('Selecione um produto');return;}
+      var p=state.products.find(function(x){return x.id===productId;});
+      saleData.produto_id=productId;
+      saleData.custo_unit=p?p.custo:0;
     }
 
-    var isNew = document.getElementById('toggle-new-client').checked;
-
+    var isNew=document.getElementById('toggle-new-client').checked;
     if(isNew){
-      var cName = document.getElementById('new-client-name').value.trim();
-      var cPhone = document.getElementById('new-client-phone').value.trim();
-      var cObs = document.getElementById('new-client-obs').value.trim();
-
+      var cName=document.getElementById('new-client-name').value.trim();
+      var cPhone=document.getElementById('new-client-phone').value.trim();
+      var cObs=document.getElementById('new-client-obs').value.trim();
       if(cName){
-        var cR = await sb.from('clientes')
-          .insert({
-            nome: cName,
-            telefone: cPhone,
-            obs: cObs,
-            user_id: state.currentUser.id
-          })
-          .select()
-          .single();
-
-        if(cR.error){
-          throw new Error('Erro ao cadastrar cliente: ' + cR.error.message);
-        }
-
-        if(cR.data){
-          state.clients.push(cR.data);
-          saleData.cliente_id = cR.data.id;
-        }
+        var cR=await sb.from('clientes').insert({nome:cName,telefone:cPhone,obs:cObs,user_id:state.currentUser.id}).select().single();
+        if(cR.error) throw new Error('Erro ao cadastrar cliente: '+cR.error.message);
+        if(cR.data){state.clients.push(cR.data);saleData.cliente_id=cR.data.id;}
       }
-    } else {
-      if(state.selectedClientId){
-        saleData.cliente_id = state.selectedClientId;
-      } else {
-        var typed = document.getElementById('sale-client-search').value.trim();
-        if(typed) saleData.cliente_nome = typed;
+    }else{
+      if(state.selectedClientId) saleData.cliente_id=state.selectedClientId;
+      else{
+        var typed=document.getElementById('sale-client-search').value.trim();
+        if(typed) saleData.cliente_nome=typed;
       }
     }
 
-    var r = await sb.from('vendas')
-      .insert(saleData)
-      .select()
-      .single();
-
-    if(r.error){
-      throw new Error('Erro ao registrar venda: ' + r.error.message);
-    }
+    var r=await sb.from('vendas').insert(saleData).select().single();
+    if(r.error) throw new Error('Erro ao registrar venda: '+r.error.message);
 
     if(r.data){
       state.sales.unshift(r.data);
-
-      var sName =
-        saleData.produto_livre ||
-        (state.products.find(function(x){ return x.id === saleData.produto_id; }) || {}).nome ||
-        'Venda';
-
-      var cxInsert = await sb.from('caixa').insert({
-        tipo: 'in',
-        descricao: 'Venda: ' + sName,
-        valor: qty * price,
-        data: data,
-        automatico: true,
-        venda_id: r.data.id,
-        user_id: state.currentUser.id
-      });
-
-      if(cxInsert.error){
-        throw new Error('Venda salva, mas houve erro no caixa: ' + cxInsert.error.message);
-      }
-
-      var cxR = await sb.from('caixa')
-        .select('*')
-        .eq('user_id', state.currentUser.id)
-        .order('data', { ascending: false });
-
-      if(cxR.error){
-        throw new Error('Venda salva, mas houve erro ao atualizar caixa: ' + cxR.error.message);
-      }
-
-      if(cxR.data){
-        state.caixa = cxR.data;
-      }
+      var sName=saleData.produto_livre||(state.products.find(function(x){return x.id===saleData.produto_id;})||{}).nome||'Venda';
+      var cxIns=await sb.from('caixa').insert({tipo:'in',descricao:'Venda: '+sName,valor:qty*price,data:data,automatico:true,venda_id:r.data.id,user_id:state.currentUser.id});
+      if(cxIns.error) throw new Error('Venda salva, mas houve erro no caixa: '+cxIns.error.message);
+      var cxR=await sb.from('caixa').select('*').eq('user_id',state.currentUser.id).order('data',{ascending:false});
+      if(cxR.error) throw new Error('Venda salva, mas houve erro ao atualizar caixa: '+cxR.error.message);
+      if(cxR.data) state.caixa=cxR.data;
     }
 
-    document.getElementById('sale-product').value = '';
-    document.getElementById('sale-qty').value = '1';
-    document.getElementById('sale-price').value = '';
-    document.getElementById('sale-free-name').value = '';
-    document.getElementById('sale-free-cost').value = '';
-    document.getElementById('sale-desc').value = '';
-    document.getElementById('sale-client-search').value = '';
-    document.getElementById('new-client-name').value = '';
-    document.getElementById('new-client-phone').value = '';
-    document.getElementById('new-client-obs').value = '';
-    document.getElementById('selected-client-info').style.display = 'none';
-    document.getElementById('sale-preview').style.display = 'none';
-    state.selectedClientId = null;
+    document.getElementById('sale-product').value='';
+    document.getElementById('sale-qty').value='1';
+    document.getElementById('sale-price').value='';
+    document.getElementById('sale-free-name').value='';
+    document.getElementById('sale-free-cost').value='';
+    document.getElementById('sale-desc').value='';
+    document.getElementById('sale-client-search').value='';
+    document.getElementById('selected-client-info').style.display='none';
+    document.getElementById('new-client-name').value='';
+    document.getElementById('new-client-phone').value='';
+    document.getElementById('new-client-obs').value='';
+    document.getElementById('sale-preview').style.display='none';
+    state.selectedClientId=null;
 
     renderDashboard();
     renderHistorico();
     renderCaixa();
     renderClientes();
-
-    alert('Venda registrada com sucesso!');
-  } catch (err) {
+    alert('Venda registrada!');
+  }catch(err){
     console.error(err);
     alert(err.message || 'Erro ao salvar venda.');
-  } finally {
-    btn.disabled = false;
-    btn.textContent = 'Registrar venda';
+  }finally{
+    btn.disabled=false;
+    btn.textContent='Registrar venda';
   }
 }
 
@@ -743,7 +647,7 @@ function renderHistorico(){
   var csel=document.getElementById('hist-client-filter');var curVal=csel.value;csel.innerHTML='<option value="">Todos os clientes</option>';state.clients.forEach(function(c){csel.innerHTML+='<option value="'+c.id+'">'+c.nome+'</option>';});csel.value=curVal;
   var now=new Date();var yr=now.getFullYear();var mo=now.getMonth();
   var filtered=state.sales.filter(function(s){
-    var d=new Date(s.data);
+    var d=new Date(s.data+'T12:00:00');
     if(period==='week'){var wk=new Date(now);wk.setDate(now.getDate()-7);if(d<wk)return false;}
     else if(period==='month'){if(d.getFullYear()!==yr||d.getMonth()!==mo)return false;}
     else if(period==='year'){if(d.getFullYear()!==yr)return false;}
@@ -766,121 +670,59 @@ async function registerCaixaIn(){
   var value=parseFloat(document.getElementById('cin-value').value)||0;
   var data=document.getElementById('cin-date').value;
   if(!desc||value<=0||!data){alert('Preencha todos os campos');return;}
-
-  var r=await sb.from('caixa')
-    .insert({tipo:'in',descricao:desc,valor:value,data:data,automatico:false,user_id:state.currentUser.id})
-    .select()
-    .single();
-
-  if(r.error){console.error(r.error);alert('Erro ao registrar entrada: '+r.error.message);return;}
-  if(r.data)state.caixa.unshift(r.data);
-
-  document.getElementById('cin-desc').value='';
-  document.getElementById('cin-value').value='';
-  renderCaixa();
-  renderDashboard();
+  try{
+    var r=await sb.from('caixa').insert({tipo:'in',descricao:desc,valor:value,data:data,automatico:false,user_id:state.currentUser.id}).select().single();
+    if(r.error) throw new Error(r.error.message);
+    if(r.data) state.caixa.unshift(r.data);
+    document.getElementById('cin-desc').value='';
+    document.getElementById('cin-value').value='';
+    renderCaixa();
+    renderDashboard();
+  }catch(err){
+    console.error(err);
+    alert('Erro ao registrar entrada: '+err.message);
+  }
 }
 async function registerCaixaOut(){
   var desc=document.getElementById('cout-desc').value.trim();
   var value=parseFloat(document.getElementById('cout-value').value)||0;
   var data=document.getElementById('cout-date').value;
   if(!desc||value<=0||!data){alert('Preencha todos os campos');return;}
-
-  var r=await sb.from('caixa')
-    .insert({tipo:'out',descricao:desc,valor:value,data:data,automatico:false,user_id:state.currentUser.id})
-    .select()
-    .single();
-
-  if(r.error){console.error(r.error);alert('Erro ao registrar saída: '+r.error.message);return;}
-  if(r.data)state.caixa.unshift(r.data);
-
-  document.getElementById('cout-desc').value='';
-  document.getElementById('cout-value').value='';
-  renderCaixa();
-  renderDashboard();
-}
-async function registerCaixaIn(){
-  var desc = document.getElementById('cin-desc').value.trim();
-  var value = parseFloat(document.getElementById('cin-value').value) || 0;
-  var data = document.getElementById('cin-date').value;
-
-  if(!desc || value <= 0 || !data){
-    alert('Preencha todos os campos');
-    return;
-  }
-
-  try {
-    var r = await sb.from('caixa')
-      .insert({
-        tipo: 'in',
-        descricao: desc,
-        valor: value,
-        data: data,
-        automatico: false,
-        user_id: state.currentUser.id
-      })
-      .select()
-      .single();
-
-    if(r.error){
-      throw new Error(r.error.message);
-    }
-
-    if(r.data){
-      state.caixa.unshift(r.data);
-    }
-
-    document.getElementById('cin-desc').value = '';
-    document.getElementById('cin-value').value = '';
-
+  try{
+    var r=await sb.from('caixa').insert({tipo:'out',descricao:desc,valor:value,data:data,automatico:false,user_id:state.currentUser.id}).select().single();
+    if(r.error) throw new Error(r.error.message);
+    if(r.data) state.caixa.unshift(r.data);
+    document.getElementById('cout-desc').value='';
+    document.getElementById('cout-value').value='';
     renderCaixa();
     renderDashboard();
-  } catch (err) {
+  }catch(err){
     console.error(err);
-    alert('Erro ao registrar entrada: ' + err.message);
+    alert('Erro ao registrar saída: '+err.message);
   }
 }
-
-async function registerCaixaOut(){
-  var desc = document.getElementById('cout-desc').value.trim();
-  var value = parseFloat(document.getElementById('cout-value').value) || 0;
-  var data = document.getElementById('cout-date').value;
-
-  if(!desc || value <= 0 || !data){
-    alert('Preencha todos os campos');
-    return;
-  }
-
-  try {
-    var r = await sb.from('caixa')
-      .insert({
-        tipo: 'out',
-        descricao: desc,
-        valor: value,
-        data: data,
-        automatico: false,
-        user_id: state.currentUser.id
-      })
-      .select()
-      .single();
-
-    if(r.error){
-      throw new Error(r.error.message);
-    }
-
-    if(r.data){
-      state.caixa.unshift(r.data);
-    }
-
-    document.getElementById('cout-desc').value = '';
-    document.getElementById('cout-value').value = '';
-
-    renderCaixa();
-    renderDashboard();
-  } catch (err) {
-    console.error(err);
-    alert('Erro ao registrar saída: ' + err.message);
-  }
+async function deleteCaixa(id){if(!confirm('Remover movimentação?'))return;await sb.from('caixa').delete().eq('id',id);state.caixa=state.caixa.filter(function(c){return c.id!==id;});renderCaixa();}
+function renderCaixa(){
+  document.getElementById('cin-date').value=new Date().toISOString().slice(0,10);document.getElementById('cout-date').value=new Date().toISOString().slice(0,10);
+  var saldo=calcSaldo();var totalIn=state.caixa.filter(function(c){return c.tipo==='in';}).reduce(function(a,c){return a+c.valor;},0);var totalOut=state.caixa.filter(function(c){return c.tipo==='out';}).reduce(function(a,c){return a+c.valor;},0);
+  var now=new Date();var yr=now.getFullYear();var mo=now.getMonth();
+  var moIn=state.caixa.filter(function(c){var d=new Date(c.data+'T12:00:00');return c.tipo==='in'&&d.getFullYear()===yr&&d.getMonth()===mo;}).reduce(function(a,c){return a+c.valor;},0);
+  var moOut=state.caixa.filter(function(c){var d=new Date(c.data+'T12:00:00');return c.tipo==='out'&&d.getFullYear()===yr&&d.getMonth()===mo;}).reduce(function(a,c){return a+c.valor;},0);
+  document.getElementById('caixa-kpi-grid').innerHTML='<div class="kpi '+(saldo>=0?'green':'red')+'"><div class="kpi-label">Saldo atual</div><div class="kpi-value" style="color:'+(saldo>=0?'var(--green)':'var(--red)')+'">'+fmt(saldo)+'</div></div><div class="kpi green"><div class="kpi-label">Total entradas</div><div class="kpi-value" style="color:var(--green)">'+fmt(totalIn)+'</div></div><div class="kpi red"><div class="kpi-label">Total saídas</div><div class="kpi-value" style="color:var(--red)">'+fmt(totalOut)+'</div></div><div class="kpi blue"><div class="kpi-label">Entradas este mês</div><div class="kpi-value" style="color:var(--accent)">'+fmt(moIn)+'</div></div><div class="kpi amber"><div class="kpi-label">Saídas este mês</div><div class="kpi-value" style="color:var(--amber)">'+fmt(moOut)+'</div></div>';
+  renderCaixaChart();renderCaixaTable();
+}
+function renderCaixaChart(){
+  if(state.charts.caixa){state.charts.caixa.destroy();}
+  var now=new Date();var dim=new Date(now.getFullYear(),now.getMonth()+1,0).getDate();var labels=[],dataIn=[],dataOut=[];
+  for(var i=1;i<=dim;i++){var key=now.getFullYear()+'-'+String(now.getMonth()+1).padStart(2,'0')+'-'+String(i).padStart(2,'0');labels.push(i%5===0||i===1?String(i):'');var dIn=state.caixa.filter(function(c){return c.tipo==='in'&&c.data===key;}).reduce(function(a,c){return a+c.valor;},0);var dOut=state.caixa.filter(function(c){return c.tipo==='out'&&c.data===key;}).reduce(function(a,c){return a+c.valor;},0);dataIn.push(dIn);dataOut.push(dOut);}
+  state.charts.caixa=new Chart(document.getElementById('chartCaixa'),{type:'bar',data:{labels:labels,datasets:[{label:'Entradas',data:dataIn,backgroundColor:'rgba(34,197,94,.7)',borderRadius:4},{label:'Saídas',data:dataOut,backgroundColor:'rgba(239,68,68,.7)',borderRadius:4}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'top',labels:{color:'#8b93a8',font:{size:11},boxWidth:10,boxHeight:10}},tooltip:{callbacks:{label:function(c){return ' '+fmt(c.raw);}}}},scales:{x:{grid:{color:'rgba(255,255,255,.04)'},ticks:{color:'#5a6278',font:{size:11}}},y:{grid:{color:'rgba(255,255,255,.04)'},ticks:{color:'#5a6278',font:{size:11},callback:function(v){return v>=1000?'R$'+(v/1000).toFixed(0)+'k':'R$'+v;}}}}}});
+}
+function renderCaixaTable(){
+  var filter=document.getElementById('caixa-filter').value;
+  var sorted=state.caixa.filter(function(c){return filter==='all'||c.tipo===filter;});
+  var tbody=document.getElementById('caixa-table');
+  if(!sorted.length){tbody.innerHTML='<tr><td colspan="5" style="text-align:center;padding:1.5rem;color:var(--text3)">Nenhuma movimentação</td></tr>';return;}
+  tbody.innerHTML=sorted.map(function(c){var d=new Date(c.data+'T12:00:00');var isIn=c.tipo==='in';return '<tr><td style="color:var(--text2)">'+d.toLocaleDateString('pt-BR')+'</td><td><span class="badge '+(isIn?'badge-green':'badge-red')+'">'+(isIn?'Entrada':'Saída')+'</span>'+(c.automatico?'<span style="font-size:10px;color:var(--text3);margin-left:6px">auto</span>':'')+'</td><td>'+c.descricao+'</td><td class="mono" style="color:'+(isIn?'var(--green)':'var(--red)')+'">'+fmt(c.valor)+'</td><td>'+(c.automatico?'':'<button class="btn btn-danger" style="padding:3px 8px;font-size:11px" onclick="deleteCaixa(\''+c.id+'\')">✕</button>')+'</td></tr>';}).join('');
 }
 
 // ---- FORNECEDOR ----

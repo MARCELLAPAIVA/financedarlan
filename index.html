@@ -96,22 +96,34 @@ input:focus,select:focus,textarea:focus{border-color:var(--accent)}select option
 <body>
 
 <!-- ===== AUTH ===== -->
-<div class="auth-form">
-  <div class="form-group">
-    <label>E-mail</label>
-    <input type="email" id="auth-email" placeholder="seuemail@exemplo.com">
+<div id="auth-screen" class="auth-screen">
+  <div class="auth-card">
+    <div class="auth-logo">Finance<span>Alt</span></div>
+
+    <div id="auth-msg" class="auth-msg"></div>
+
+    <div class="auth-form">
+      <div class="form-group">
+        <label>E-mail</label>
+        <input type="email" id="auth-email" placeholder="seuemail@exemplo.com">
+      </div>
+
+      <div class="form-group">
+        <label>Senha</label>
+        <input type="password" id="auth-password" placeholder="Insira sua senha" onkeydown="if(event.key==='Enter')authSubmit()">
+      </div>
+
+      <button class="btn btn-primary" id="auth-btn" onclick="authSubmit()" style="padding:10px;font-size:14px">
+        Entrar
+      </button>
+    </div>
   </div>
-  <div class="form-group">
-    <label>Senha</label>
-    <input type="password" id="auth-password" placeholder="insira sua senha" onkeydown="if(event.key==='Enter')authSubmit()">
-  </div>
-  <button class="btn btn-primary" id="auth-btn" onclick="authSubmit()" style="padding:10px;font-size:14px">Entrar</button>
 </div>
 
 <!-- ===== APP ===== -->
 <div id="app" style="display:none">
 <div class="topbar">
-  <div class="logo">meta<span>vendas</span></div>
+  <div class="logo">Finance<span>Alt</span></div>
   <div class="nav-tabs">
     <button class="nav-tab active" onclick="showPage('dashboard')">Dashboard</button>
     <button class="nav-tab" onclick="showPage('produtos')">Produtos</button>
@@ -323,20 +335,12 @@ function getClientName(s){if(s.cliente_id){var c=state.clients.find(function(x){
 function loading(show){document.getElementById('produtos-loading').style.display=show?'flex':'none';}
 
 // ---- AUTH ----
-// ---- AUTH ----
-var authMode = 'login';
-
-function setAuthTab(mode){
-  authMode = 'login';
-  document.getElementById('auth-btn').textContent = 'Entrar';
-  document.getElementById('auth-msg').className = 'auth-msg';
-}
-
 async function authSubmit(){
   var email = document.getElementById('auth-email').value.trim();
   var password = document.getElementById('auth-password').value;
   var msg = document.getElementById('auth-msg');
 
+  msg.textContent = '';
   msg.className = 'auth-msg';
 
   if(!email || !password){
@@ -358,29 +362,6 @@ async function authSubmit(){
 
   msg.textContent = 'Login realizado com sucesso.';
   msg.className = 'auth-msg success';
-}
-
-async function forgotPassword(){
-  var email = document.getElementById('auth-email').value.trim();
-  var msg = document.getElementById('auth-msg');
-
-  if(!email){
-    msg.textContent = 'Digite seu e-mail primeiro.';
-    msg.className = 'auth-msg error';
-    return;
-  }
-
-  var r = await sb.auth.resetPasswordForEmail(email, {
-    redirectTo: window.location.href
-  });
-
-  if(r.error){
-    msg.textContent = r.error.message;
-    msg.className = 'auth-msg error';
-  } else {
-    msg.textContent = 'Link de redefinição enviado para seu e-mail!';
-    msg.className = 'auth-msg success';
-  }
 }
 
 async function signOut(){

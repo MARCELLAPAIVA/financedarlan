@@ -329,7 +329,6 @@ function getClientName(s){if(s.cliente_id){var c=state.clients.find(function(x){
 function loading(show){document.getElementById('produtos-loading').style.display=show?'flex':'none';}
 
 // ---- AUTH ----
-// ---- AUTH ----
 async function authSubmit(){
   var email = document.getElementById('auth-email').value.trim();
   var password = document.getElementById('auth-password').value;
@@ -418,7 +417,6 @@ sb.auth.onAuthStateChange(async function(event, session){
   }
 });
 
-// ---- LOAD DATA ----
 async function loadAllData(){
   if(!state.currentUser || !state.currentUser.id){
     console.error('Usuário não autenticado ao carregar dados');
@@ -789,12 +787,72 @@ function renderCaixaTable(){
 
 // ---- FORNECEDOR ----
 function renderFornecedor(){document.getElementById('exp-date').value=new Date().toISOString().slice(0,10);renderExpKpis();renderExpCharts();renderExpTable();}
-async function registerExpense(){
-  var supplier=document.getElementById('exp-supplier').value.trim();var desc=document.getElementById('exp-desc').value.trim();var value=parseFloat(document.getElementById('exp-value').value)||0;var category=document.getElementById('exp-category').value;var data=document.getElementById('exp-date').value;
-  if(!supplier||!desc||value<=0||!data){alert('Preencha todos os campos');return;}
-  var r=await sb.from('gastos_fornecedor').insert({fornecedor:supplier,descricao:desc,valor:value,categoria:category,data:data,user_id:state.currentUser.id}).select().single();
-  if(r.data)state.expenses.unshift(r.data);document.getElementById('exp-supplier').value='';document.getElementById('exp-desc').value='';document.getElementById('exp-value').value='';
-  renderExpKpis();renderExpCharts();renderExpTable();
+aasync function registerExpense(){
+  var supplier = document.getElementById('exp-supplier').value.trim();
+  var desc = document.getElementById('exp-desc').value.trim();
+  var value = parseFloat(document.getElementById('exp-value').value) || 0;
+  var category = document.getElementById('exp-category').value;
+  var data = document.getElementById('exp-date').value;
+
+  if(!supplier || !desc || value <= 0 || !data){
+    alert('Preencha todos os campos');
+    return;
+  }
+
+  try {
+    var r = await sb.from('gastos_fornecedor')
+      .insert({
+        fornecedor: supplier,
+        descricao: desc,
+        valor: value,
+        categoria: category,
+        data: data,
+        user_id: state.currentUser.id
+      })
+      .select()
+      .single();
+
+    if(r.error){
+      throw new Error(r.error.message);
+    }
+
+    if(r.data){
+      state.expenses.unshift(r.data);
+    }
+
+    var cx = await sb.from('caixa')
+      .insert({
+        tipo: 'out',
+        descricao: 'Fornecedor: ' + supplier + ' - ' + desc,
+        valor: value,
+        data: data,
+        automatico: true,
+        user_id: state.currentUser.id
+      })
+      .select()
+      .single();
+
+    if(cx.error){
+      throw new Error('Erro ao lançar no caixa: ' + cx.error.message);
+    }
+
+    if(cx.data){
+      state.caixa.unshift(cx.data);
+    }
+
+    document.getElementById('exp-supplier').value = '';
+    document.getElementById('exp-desc').value = '';
+    document.getElementById('exp-value').value = '';
+
+    renderFornecedor();
+    renderCaixa();
+    renderDashboard();
+
+    alert('Gasto registrado e abatido do caixa!');
+  } catch (err) {
+    console.error(err);
+    alert('Erro: ' + err.message);
+  }
 }
 async function deleteExpense(id){if(!confirm('Remover gasto?'))return;await sb.from('gastos_fornecedor').delete().eq('id',id);state.expenses=state.expenses.filter(function(e){return e.id!==id;});renderExpKpis();renderExpCharts();renderExpTable();}
 function renderExpKpis(){
@@ -819,18 +877,8 @@ function renderExpTable(){
   tbody.innerHTML=sorted.map(function(e){var d=new Date(e.data+'T12:00:00');return '<tr><td style="color:var(--text2)">'+d.toLocaleDateString('pt-BR')+'</td><td style="font-weight:600">'+e.fornecedor+'</td><td style="color:var(--text2)">'+e.descricao+'</td><td><span class="badge badge-amber">'+e.categoria+'</span></td><td class="mono" style="color:var(--red)">'+fmt(e.valor)+'</td><td><button class="btn btn-danger" style="padding:3px 8px;font-size:11px" onclick="deleteExpense(\''+e.id+'\')">✕</button></td></tr>';}).join('');
 }
 
-function closeModal(id){
-  document.getElementById(id).classList.remove('open');
-}
-
-document.querySelectorAll('.modal-bg').forEach(function(m){
-  m.addEventListener('click',function(e){
-    if(e.target===m)m.classList.remove('open');
-  });
-});
+function closeModal(id){document.getElementById(id).classList.remove('open');}
+document.querySelectorAll('.modal-bg').forEach(function(m){m.addEventListener('click',function(e){if(e.target===m)m.classList.remove('open');});});
 
 initializeApp();
-
 </script>
-</body>
-</html>

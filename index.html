@@ -819,8 +819,18 @@ function renderExpTable(){
   tbody.innerHTML=sorted.map(function(e){var d=new Date(e.data+'T12:00:00');return '<tr><td style="color:var(--text2)">'+d.toLocaleDateString('pt-BR')+'</td><td style="font-weight:600">'+e.fornecedor+'</td><td style="color:var(--text2)">'+e.descricao+'</td><td><span class="badge badge-amber">'+e.categoria+'</span></td><td class="mono" style="color:var(--red)">'+fmt(e.valor)+'</td><td><button class="btn btn-danger" style="padding:3px 8px;font-size:11px" onclick="deleteExpense(\''+e.id+'\')">✕</button></td></tr>';}).join('');
 }
 
-function closeModal(id){document.getElementById(id).classList.remove('open');}
-document.querySelectorAll('.modal-bg').forEach(function(m){m.addEventListener('click',function(e){if(e.target===m)m.classList.remove('open');});});
+function closeModal(id){
+  document.getElementById(id).classList.remove('open');
+}
+
+document.querySelectorAll('.modal-bg').forEach(function(m){
+  m.addEventListener('click',function(e){
+    if(e.target===m)m.classList.remove('open');
+  });
+});
+
+initializeApp();
+
 </script>
 </body>
 </html>

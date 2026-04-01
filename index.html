@@ -329,10 +329,12 @@ function getClientName(s){if(s.cliente_id){var c=state.clients.find(function(x){
 function loading(show){document.getElementById('produtos-loading').style.display=show?'flex':'none';}
 
 // ---- AUTH ----
+// ---- AUTH ----
 async function authSubmit(){
   var email = document.getElementById('auth-email').value.trim();
   var password = document.getElementById('auth-password').value;
   var msg = document.getElementById('auth-msg');
+
   msg.textContent = '';
   msg.className = 'auth-msg';
 
@@ -342,7 +344,10 @@ async function authSubmit(){
     return;
   }
 
-  var result = await sb.auth.signInWithPassword({ email: email, password: password });
+  var result = await sb.auth.signInWithPassword({
+    email: email,
+    password: password
+  });
 
   if(result.error){
     msg.textContent = result.error.message;
@@ -350,13 +355,45 @@ async function authSubmit(){
     return;
   }
 
-  msg.textContent = 'Login realizado com sucesso.';
-  msg.className = 'auth-msg success';
+  await initializeApp();
 }
 
 async function signOut(){
   await sb.auth.signOut();
   location.reload();
+}
+
+async function initializeApp(){
+  const { data, error } = await sb.auth.getSession();
+
+  if(error){
+    console.error('Erro ao recuperar sessão:', error);
+    document.getElementById('auth-screen').style.display = 'flex';
+    document.getElementById('app').style.display = 'none';
+    return;
+  }
+
+  const session = data.session;
+
+  if(session && session.user){
+    state.currentUser = session.user;
+    document.getElementById('auth-screen').style.display = 'none';
+    document.getElementById('app').style.display = 'block';
+    document.getElementById('user-info').textContent = session.user.email || '';
+
+    await loadAllData();
+
+    renderDashboard();
+    renderProducts();
+    renderVendas();
+    renderClientes();
+    renderHistorico();
+    renderCaixa();
+    renderFornecedor();
+  } else {
+    document.getElementById('auth-screen').style.display = 'flex';
+    document.getElementById('app').style.display = 'none';
+  }
 }
 
 sb.auth.onAuthStateChange(async function(event, session){
@@ -365,9 +402,17 @@ sb.auth.onAuthStateChange(async function(event, session){
     document.getElementById('auth-screen').style.display = 'none';
     document.getElementById('app').style.display = 'block';
     document.getElementById('user-info').textContent = session.user.email || '';
+
     await loadAllData();
+
     renderDashboard();
-  }else{
+    renderProducts();
+    renderVendas();
+    renderClientes();
+    renderHistorico();
+    renderCaixa();
+    renderFornecedor();
+  } else {
     document.getElementById('auth-screen').style.display = 'flex';
     document.getElementById('app').style.display = 'none';
   }
@@ -375,15 +420,32 @@ sb.auth.onAuthStateChange(async function(event, session){
 
 // ---- LOAD DATA ----
 async function loadAllData(){
-  var uid=state.currentUser.id;
-  var [p,c,v,cx,g]=await Promise.all([
-    sb.from('produtos').select('*').eq('user_id',uid).order('criado_em'),
-    sb.from('clientes').select('*').eq('user_id',uid).order('nome'),
-    sb.from('vendas').select('*').eq('user_id',uid).order('data',{ascending:false}),
-    sb.from('caixa').select('*').eq('user_id',uid).order('data',{ascending:false}),
-    sb.from('gastos_fornecedor').select('*').eq('user_id',uid).order('data',{ascending:false})
+  if(!state.currentUser || !state.currentUser.id){
+    console.error('Usuário não autenticado ao carregar dados');
+    return;
+  }
+
+  var uid = state.currentUser.id;
+
+  var [p,c,v,cx,g] = await Promise.all([
+    sb.from('produtos').select('*').eq('user_id', uid).order('criado_em'),
+    sb.from('clientes').select('*').eq('user_id', uid).order('nome'),
+    sb.from('vendas').select('*').eq('user_id', uid).order('data', { ascending:false }),
+    sb.from('caixa').select('*').eq('user_id', uid).order('data', { ascending:false }),
+    sb.from('gastos_fornecedor').select('*').eq('user_id', uid).order('data', { ascending:false })
   ]);
-  state.products=p.data||[];state.clients=c.data||[];state.sales=v.data||[];state.caixa=cx.data||[];state.expenses=g.data||[];
+
+  if(p.error) console.error('Erro produtos:', p.error);
+  if(c.error) console.error('Erro clientes:', c.error);
+  if(v.error) console.error('Erro vendas:', v.error);
+  if(cx.error) console.error('Erro caixa:', cx.error);
+  if(g.error) console.error('Erro gastos:', g.error);
+
+  state.products = p.data || [];
+  state.clients = c.data || [];
+  state.sales = v.data || [];
+  state.caixa = cx.data || [];
+  state.expenses = g.data || [];
 }
 
 // ---- NAV ----

@@ -384,9 +384,9 @@ sb.auth.onAuthStateChange(async function(event,session){
 async function loadAllData(){
   var uid=state.currentUser.id;
   var [p,c,v,cx,g]=await Promise.all([
-    sb.from('products').select('*').eq('user_id',uid).order('criado_em'),
-    sb.from('clients').select('*').eq('user_id',uid).order('nome'),
-    sb.from('sales').select('*').eq('user_id',uid).order('data',{ascending:false}),
+    sb.from('produtos').select('*').eq('user_id',uid).order('criado_em'),
+    sb.from('clientes').select('*').eq('user_id',uid).order('nome'),
+    sb.from('vendas').select('*').eq('user_id',uid).order('data',{ascending:false}),
     sb.from('caixa').select('*').eq('user_id',uid).order('data',{ascending:false}),
     sb.from('gastos_fornecedor').select('*').eq('user_id',uid).order('data',{ascending:false})
   ]);

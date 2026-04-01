@@ -347,58 +347,51 @@ function getClientName(s){if(s.cliente_id){var c=state.clients.find(function(x){
 function loading(show){document.getElementById('produtos-loading').style.display=show?'flex':'none';}
 
 // ---- AUTH ----
-var authMode='login';
-function setAuthTab(mode){
-  // modo único (login fixo) — não faz nada
-  authMode='login';
-  document.getElementById('auth-btn').textContent='Entrar';
-  document.getElementById('auth-msg').className='auth-msg';
-}
-
 async function authSubmit(){
-  var email=document.getElementById('auth-email').value.trim();
-  var password=document.getElementById('auth-password').value;
-  var msg=document.getElementById('auth-msg');
-  msg.className='auth-msg';
-  if(!email||!password){msg.textContent='Preencha e-mail e senha.';msg.className='auth-msg error';return;}
-  if(authMode==='login'){
-    // login fixo solicitado
-    if(email==='darlancaetano.filho'&&password==='gordinho'){
-      state.currentUser={email:'darlancaetano.filho',id:'fixed-user-id'};
-      document.getElementById('auth-screen').style.display='none';
-      document.getElementById('app').style.display='block';
-      document.getElementById('user-info').textContent=state.currentUser.email;
-      await loadAllData();
-      renderDashboard();
-      return;
-    }
-    msg.textContent='E-mail ou senha incorretos.';
-    msg.className='auth-msg error';
-  }else{
-    msg.textContent='Cadastro desativado. Use o login fixo.';
-    msg.className='auth-msg error';
-  }
-}
-async function forgotPassword(){
-  var email=document.getElementById('auth-email').value.trim();var msg=document.getElementById('auth-msg');
-  if(!email){msg.textContent='Digite seu e-mail primeiro.';msg.className='auth-msg error';return;}
-  var r=await sb.auth.resetPasswordForEmail(email,{redirectTo:window.location.href});
-  if(r.error){msg.textContent=r.error.message;msg.className='auth-msg error';}
-  else{msg.textContent='Link de redefinição enviado para seu e-mail!';msg.className='auth-msg success';}
-}
-async function signOut(){await sb.auth.signOut();location.reload();}
+  var email = document.getElementById('auth-email').value.trim();
+  var password = document.getElementById('auth-password').value;
+  var msg = document.getElementById('auth-msg');
 
-sb.auth.onAuthStateChange(async function(event,session){
-  if(session&&session.user){
-    state.currentUser=session.user;
-    document.getElementById('auth-screen').style.display='none';
-    document.getElementById('app').style.display='block';
-    document.getElementById('user-info').textContent=session.user.email;
+  msg.textContent = '';
+  msg.className = 'auth-msg';
+
+  if(!email || !password){
+    msg.textContent = 'Preencha e-mail e senha.';
+    msg.className = 'auth-msg error';
+    return;
+  }
+
+  var result = await sb.auth.signInWithPassword({
+    email: email,
+    password: password
+  });
+
+  if(result.error){
+    msg.textContent = result.error.message;
+    msg.className = 'auth-msg error';
+    return;
+  }
+
+  msg.textContent = 'Login realizado com sucesso.';
+  msg.className = 'auth-msg success';
+}
+
+async function signOut(){
+  await sb.auth.signOut();
+  location.reload();
+}
+
+sb.auth.onAuthStateChange(async function(event, session){
+  if(session && session.user){
+    state.currentUser = session.user;
+    document.getElementById('auth-screen').style.display = 'none';
+    document.getElementById('app').style.display = 'block';
+    document.getElementById('user-info').textContent = session.user.email || '';
     await loadAllData();
     renderDashboard();
-  }else{
-    document.getElementById('auth-screen').style.display='flex';
-    document.getElementById('app').style.display='none';
+  } else {
+    document.getElementById('auth-screen').style.display = 'flex';
+    document.getElementById('app').style.display = 'none';
   }
 });
 

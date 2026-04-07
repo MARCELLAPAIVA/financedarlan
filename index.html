@@ -435,7 +435,7 @@ sb.auth.onAuthStateChange(async function(event, session){
 async function loadAllData(){
   if(!state.currentUser || !state.currentUser.id){
     console.error('Usuário não autenticado ao carregar dados');
-    return;
+    return false;
   }
 
   var uid = state.currentUser.id;
@@ -454,11 +454,16 @@ async function loadAllData(){
   if(cx.error) console.error('Erro caixa:', cx.error);
   if(g.error) console.error('Erro gastos:', g.error);
 
+  if(p.error || c.error || v.error || cx.error || g.error){
+    return false;
+  }
+
   state.products = p.data || [];
   state.clients = c.data || [];
   state.sales = v.data || [];
   state.caixa = cx.data || [];
   state.expenses = g.data || [];
+  return true;
 }
 
 // ---- NAV ----

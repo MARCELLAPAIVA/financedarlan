@@ -335,11 +335,22 @@ function doLogin(){
   var p=document.getElementById('auth-password').value;
   var msg=document.getElementById('auth-msg');
   msg.className='auth-msg';
-  if(u!==LOGIN_USER||p!==LOGIN_PASS){msg.textContent='Usuário ou senha incorretos.';msg.className='auth-msg error';return;}
+  msg.textContent='';
+
+  if(u!==LOGIN_USER||p!==LOGIN_PASS){
+    msg.textContent='Usuário ou senha incorretos.';
+    msg.className='auth-msg error';
+    return;
+  }
+
   localStorage.setItem('mv_logged','1');
   startApp();
 }
-function doLogout(){ localStorage.removeItem('mv_logged'); location.reload(); }
+
+function doLogout(){
+  localStorage.removeItem('mv_logged');
+  location.reload();
+}
 
 // ---- INIT APP ----
 async function startApp(){
@@ -350,10 +361,15 @@ async function startApp(){
   await loadAll();
   document.getElementById('global-loading').style.display='none';
   renderDashboard();
+  renderProducts();
+  renderVendas();
+  renderClientes();
+  renderHistorico();
+  renderCaixa();
+  renderFornecedor();
 }
 
 // ---- LOAD ALL FROM SUPABASE ----
-<script>
 async function loadAll(){
   try {
     var produtosRes = await sb.from('produtos').select('*').order('criado_em', { ascending: true });
@@ -381,6 +397,14 @@ async function loadAll(){
     alert('Erro ao carregar dados: ' + (e.message || e));
   }
 }
+
+// Recarrega tudo e re-renderiza quando aba volta ao foco
+document.addEventListener('visibilitychange', async function(){
+  if(document.visibilityState==='visible' && localStorage.getItem('mv_logged')==='1'){
+    await loadAll();
+    rerenderCurrent();
+  }
+});
 </script>
 
 // Recarrega tudo e re-renderiza quando aba volta ao foco
